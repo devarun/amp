@@ -28,7 +28,7 @@ class VhostTemplate implements HttpdInterface {
   /**
    * @var string, name of the template file
    */
-  private $template;
+  private $defaultTemplate;
 
   /**
    * @var EngineInterface
@@ -72,7 +72,7 @@ class VhostTemplate implements HttpdInterface {
     $parameters['url'] = $url;
     $parameters['include_vhost_file'] = '';
     $parameters['log_dir'] = $this->getLogDir();
-    $content = $this->getTemplateEngine()->render($this->getTemplate(), $parameters);
+    $content = $this->getTemplateEngine()->render($this->getDefaultTemplate(), $parameters);
     $this->fs->dumpFile($this->createFilePath($root, $url), $content);
 
     $this->setupLogDir();
@@ -212,19 +212,18 @@ class VhostTemplate implements HttpdInterface {
     $this->httpd_shared_ports = $httpd_shared_ports;
   }
 
-
   /**
    * @param string $template
    */
-  public function setTemplate($template) {
-    $this->template = $template;
+  public function setDefaultTemplate($template) {
+    $this->defaultTemplate = $template;
   }
 
   /**
    * @return string
    */
-  public function getTemplate() {
-    return $this->template;
+  public function getDefaultTemplate() {
+    return $this->defaultTemplate;
   }
 
   /**
